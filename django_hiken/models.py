@@ -22,6 +22,9 @@ class TemplateHTML(models.Model):
 
         template = Template(self.template)
         return template.render(context)
+    
+    class Meta:
+        verbose_name_plural = "HTML Templates"
 
 
 
