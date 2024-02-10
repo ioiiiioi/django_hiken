@@ -1,2 +1,4 @@
 include LICENSE
 include README.rst
+recursive-include django_hiken/migrations *
+recursive-exclude * __pycache__
