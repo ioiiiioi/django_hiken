@@ -29,12 +29,14 @@ class TemplateHTML(models.Model):
         template = Template(self.template)
         return template.render(context)
 
-    def send_mail(self, content: dict[str, str]):
+    def send_mail(self, content: dict[str, str], recipients:list):
         message = self.generate(content)
         if not hasattr(settings, "EMAIL_SENDER"):
             raise ValidationError("Missing EMAIL_SENDER setting.")
+        if not isinstance(recipients, list):
+            raise ValidationError("Recipients must be a list.")
         email = EmailMultiAlternatives(
-            self.subject, message, to=[email], from_email=settings.EMAIL_SENDER
+            self.subject, message, to=recipients, from_email=settings.EMAIL_SENDER
         )
         email.content_subtype = "html"
         email.send(fail_silently=False)
